@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CopyrightFragment"
+    android:background="@color/white"
+    android:paddingBottom="20dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/policy_title"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:textColor="@color/black"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:layout_marginTop="2dp"
+                android:paddingStart="17dp"
+                android:text="arXiv License Information"/>
+
+            <TextView
+                android:id="@+id/policy_notice"
+                android:paddingStart="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="As a repository for scholarly material, arXiv keeps a permanent record of every article and version posted. All articles on arXiv.org can be viewed and downloaded freely by anyone.\n\nTo maintain this scholarly record, arXiv needs permission from submitters to post and distribute their work. Permission is granted through a license, chosen by the submitter, and the submitter must certify that they have the right to grant that license.\n\nSeveral types of licenses are available, listed below. For all licenses here, with the exception of CC Zero, the original copyright holder retains ownership after posting on arXiv."
+                android:layout_below="@+id/policy_title"/>
+
+            <TextView
+                android:id="@+id/policy_date"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:layout_below="@+id/policy_notice"
+                android:paddingStart="17dp"
+                android:layout_marginTop="10dp"
+                android:text="How to choose a license"/>
+
+            <TextView
+                android:id="@+id/policy_date_text"
+                android:paddingStart="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="arXiv values open access and encourages choosing a liberal license for re-use of the paper. However, each situation is unique. Funders may require specific licenses. Journals have different policies regarding preprints, embargo periods, and post-publication distribution. Please note that different versions of the work can have different licenses.\n\nUltimately, it is the submitter’s responsibility to choose the appropriate license for their content. The license chosen is irrevocable and cannot be changed.\n\nTo make a license decision, arXiv recommends the following:\n\nRead and understand the submission terms and agreement and instructions for submission\nUnderstand the meanings and implications of each license below\nCheck the policies of funders and journals (contact journals directly or using a third-party service such as Sherpa Romeo)\nConsult with colleagues in your field of study\nRemember that articles posted on arXiv are a permanent part of the scholarly record and the license chosen for each version is irrevocable"
+                android:layout_below="@+id/policy_date"/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

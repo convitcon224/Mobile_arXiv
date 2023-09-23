@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PolicyFragment"
+    android:background="@color/white"
+    android:paddingBottom="20dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/policy_title"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:textColor="@color/black"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:layout_marginTop="2dp"
+                android:paddingStart="17dp"
+                android:text="arXiv Privacy Policy"/>
+
+            <TextView
+                android:id="@+id/policy_notice"
+                android:paddingStart="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="The following privacy notice describes what information we collect from you when you visit arXiv.org and how we use this information. Please read this privacy notice carefully so that you understand our privacy practices."
+                android:layout_below="@+id/policy_title"/>
+
+            <TextView
+                android:id="@+id/policy_date"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:layout_below="@+id/policy_notice"
+                android:paddingStart="17dp"
+                android:layout_marginTop="10dp"
+                android:text="Effective Date of Privacy Notice"/>
+
+            <TextView
+                android:id="@+id/policy_date_text"
+                android:paddingStart="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="The privacy notice was last revised on 2019-02-08."
+                android:layout_below="@+id/policy_date"/>
+
+            <TextView
+                android:id="@+id/policy_gather_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:gravity="center|start"
+                android:layout_below="@+id/policy_date_text"
+                android:paddingStart="17dp"
+                android:layout_marginTop="10dp"
+                android:text="What information we gather during your visit"/>
+
+            <TextView
+                android:id="@+id/policy_gather_info_text"
+                android:paddingStart="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="Information we gather for anonymous browsing:\n\nWe automatically collect certain information from you when you visit arXiv. This data is used to gather metrics on site usage including geographic location of visitors (IP address), pathways navigated through the website, what type of internet browser is used (user-agent). No attempt is made to deanonymize information we collect.\n\nInformation you may provide as registered user:\n\nWe may also collect other information as described in this notice or other specific Cornell University privacy notices. In order to take full advantage of some of our services, including article submission, we may request name, email, username, ORCID, past emails, affiliation, country, additional contact information and/or online identifiers. We may also request a record of affiliation and publication record be provided via email. When a user submits an article to arXiv we also collect author names, affiliation of co-authors (if provided), submitter IP address and submitter remote host.\n\nInformation associated with your user account can be viewed on your user dashboard.\n\nInformation you may provide when submitting feedback or help request:\n\nUsers who email arXiv administrators for technical help or moderation requests should include information relevant to the request.\n\nUsers who choose to fill out a feedback form on the website can do so anonymously or by providing personal information, such as name, email, and information about your operating environment.\n\nInformation provided by others:\n\nUsers who submit articles or other content to arXiv must ensure that they have the consent to share personal data contained within the content or the submission may be removed."
+                android:layout_marginTop="7dp"
+                android:layout_below="@+id/policy_gather_info"/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

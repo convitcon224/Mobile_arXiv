@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ArXiv" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/bg2</item>
+<!--        <item name="android:actionBarStyle">@style/MyActionBarStyle</item>-->
+<!--        <item name="android:actionBar"></item>-->
+    </style>
+<!--    <style name="MyActionBarStyle">-->
+<!--        <item name="android:background">@color/bg2</item>-->
+<!--        <item name="android:paddingLeft">57dp</item>-->
+<!--    </style>-->
+
+    <style name="Theme.ArXiv" parent="Base.Theme.ArXiv" />
+</resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity"
+    android:id="@+id/activity_search">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/theaderse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3sp"
+            android:paddingTop="3sp"
+            android:paddingLeft="5sp"
+            android:text="Search"
+            android:textSize="36sp"
+            android:paddingStart="30dp"
+            android:textColor="@color/white"
+            android:background="@color/primary_color"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingLeft="5sp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:text="Choose category"
+            android:paddingStart="27dp"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingHorizontal="30dp"
+            >
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:drawSelectorOnTop="true"
+                android:paddingBottom="20dp"/>
+
+            <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/field1"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5sp"
+            android:paddingHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <TextView
+                android:id="@+id/tsearchdate"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="11sp"
+                android:paddingBottom="10dp"
+                android:paddingRight="4sp"
+                android:text="From"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/datebtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/redbutton"
+                android:onClick="pressedDateButton"
+                android:text="today"
+                android:textColor="@color/white"
+
+                />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/seachbutton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/redbutton"
+            android:layout_gravity="center"
+            android:padding="13dp"
+            android:layout_marginTop="30dp"
+            android:text="search"
+            android:textColor="@color/white"
+            android:onClick="searchOnClick"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

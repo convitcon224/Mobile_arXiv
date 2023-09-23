@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutFragment"
+    android:background="@color/white">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/about_title"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:textColor="@color/black"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:gravity="center|start"
+        android:layout_marginTop="2dp"
+        android:paddingStart="17dp"
+        android:text="About arXiv"/>
+
+    <TextView
+        android:id="@+id/about_text"
+        android:paddingStart="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="12dp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:text="arXiv is a curated research-sharing platform open to anyone. As a pioneer in digital open access, arXiv.org now hosts more than two million scholarly articles in eight subject areas, curated by our strong community of volunteer moderators."
+        android:layout_below="@+id/about_title"/>
+
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DocListActivity"
+    android:id="@+id/activity_doclist">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="111dp"-->
+<!--            android:background="@color/primary_color"-->
+<!--            android:src="@drawable/logo" />-->
+        <TextView
+            android:id="@+id/listField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/black"
+            android:background="@color/bg3"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center|start"
+            android:layout_marginTop="2dp"
+            android:paddingStart="17dp"
+            android:text="FIELDS"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="15dp"
+            android:overScrollMode="never"/>
+    </LinearLayout>
+</FrameLayout>

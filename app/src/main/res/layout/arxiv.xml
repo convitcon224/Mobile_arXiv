@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arXiv"
+    android:id="@+id/arxiv_activity"
+    android:background="@color/main_background">
+
+    <TextView
+        android:id="@+id/main_field"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:textColor="@color/black"
+        android:background="@color/bg3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center|start"
+        android:layout_marginTop="2dp"
+        android:paddingStart="17dp"
+        android:text="FIELDS"/>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_field"/>
+
+    <ImageButton
+        android:id="@+id/main_upload"
+        android:contentDescription="upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background"
+        android:src="@drawable/upload"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginBottom="27dp"
+        android:onClick="uploadButtonOnClick"/>
+
+</RelativeLayout>
