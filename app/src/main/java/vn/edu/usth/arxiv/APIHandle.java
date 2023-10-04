@@ -1,5 +1,7 @@
 package vn.edu.usth.arxiv;
 
+import android.util.Log;
+
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;

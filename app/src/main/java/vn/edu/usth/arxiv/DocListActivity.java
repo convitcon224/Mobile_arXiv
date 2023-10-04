@@ -94,6 +94,7 @@ public class DocListActivity extends AppCompatActivity {
             article.artTit = APIHandle.docs.get(t).getTitle();
             article.auName = APIHandle.docs.get(t).getAuthors();
             article.absText = APIHandle.docs.get(t).getContent();
+            article.trackID = APIHandle.docs.get(t).getId().replace("http://arxiv.org/abs/","");
             onDocList = false;
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.activity_doclist, article).addToBackStack(null).commit();
