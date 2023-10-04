@@ -31,7 +31,7 @@ public class Article_RecyclerViewAdapter extends RecyclerView.Adapter<Article_Re
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        holder.tvIDList.setText(articleModels.get(position).getArticleID());
         holder.tvTitle.setText(articleModels.get(position).getArticleTitle());
         holder.tvDate.setText(articleModels.get(position).getArticleDate());
         holder.tvAuthor.setText(articleModels.get(position).getArticleAuthor());
@@ -44,10 +44,10 @@ public class Article_RecyclerViewAdapter extends RecyclerView.Adapter<Article_Re
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvTitle, tvDate, tvAuthor;
+        TextView tvIDList, tvTitle, tvDate, tvAuthor;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            tvIDList = itemView.findViewById(R.id.idArticle);
             tvTitle = itemView.findViewById(R.id.titleText);
             tvDate = itemView.findViewById(R.id.dateText);
             tvAuthor = itemView.findViewById(R.id.authorText);

@@ -23,8 +23,15 @@
             android:onClick="rowItemOnclick">
 
             <TextView
-                android:id="@+id/titleText"
+                android:id="@+id/idArticle"
                 android:paddingTop="12dp"
+                android:textSize="11dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="idddddddddd" />
+
+            <TextView
+                android:id="@+id/titleText"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="23dp"

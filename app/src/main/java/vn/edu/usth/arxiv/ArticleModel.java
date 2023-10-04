@@ -1,15 +1,21 @@
 package vn.edu.usth.arxiv;
 
 public class ArticleModel {
-    String articleTitle;
-    String articleDate;
-    String articleAuthor;
+    private String articleID;
+    private String articleTitle;
+    private String articleDate;
+    private String articleAuthor;
 
 
-    public ArticleModel(String articleTitle, String articleDate, String articleAuthor) {
+    public ArticleModel(String id, String articleTitle, String articleDate, String articleAuthor) {
+        this.articleID = id;
         this.articleTitle = articleTitle;
         this.articleDate = articleDate;
         this.articleAuthor = articleAuthor;
+    }
+
+    public String getArticleID() {
+        return articleID;
     }
 
     public String getArticleTitle() {

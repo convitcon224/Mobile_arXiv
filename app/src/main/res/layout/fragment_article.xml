@@ -99,7 +99,8 @@
                     android:text="Intrinsic superconducting diode effects in tilted Weyl and Dirac semimetals"
                     android:paddingLeft="10dp"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/author"
@@ -107,7 +108,8 @@
                     android:layout_height="wrap_content"
                     android:text="Kai Chen, Bishnu Karki, Pavan Hosur"
                     android:paddingTop="5dp"
-                    android:paddingLeft="10dp"/>
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"/>
 
                 <View
                     android:id="@+id/horizontal_line"
@@ -122,7 +124,8 @@
                     android:text="We explore Weyl and Dirac semimetals with tilted nodes as platforms for realizing an intrinsic superconducting diode effect. Although tilting breaks sufficient spatial and time-reversal symmetries, we prove that -- at least for conventional s-wave singlet pairing -- the effect is forbidden by an emergent particle-hole symmetry at low energies if the Fermi level is tuned to the nodes. Then, as a stepping stone to the three-dimensional semimetals, we analyze a minimal one-dimensional model with a tilted helical node using Ginzburg-Landau theory. While one might naively expect a drastic enhancement of the effect when the node turns from type-I to type-II, we find that the presence of multiple Fermi pockets is more important as it enables multiple pairing amplitudes with indepedent contributions to supercurrents in opposite directions. Equipped with this insight, we construct minimal lattice models of Weyl and Dirac semimetals and study the superconducting diode effect in them. Once again, we see a substantial enhancement when the normal state has multiple Fermi pockets per node that can accommodate more than one pairing channel. In summary, this study sheds light on the key factors governing the intrinsic superconducting diode effect in systems with asymmetric band structures and paves the way for realizing it in topological semimetals. "
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
-                    android:textSize="16dp"/>
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
             </LinearLayout>
         </ScrollView>
 

@@ -21,6 +21,14 @@ public class DocListActivity extends AppCompatActivity {
     public static boolean onDocList = true;
     public static String title;
 
+    private static ArrayList<String> articleID = new ArrayList<>();
+    private static ArrayList<String> articleTitle = new ArrayList<>();
+    private static ArrayList<String> articleDate = new ArrayList<>();
+    private static ArrayList<String> articleAuthor = new ArrayList<>();
+
+    private static int offset = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +37,12 @@ public class DocListActivity extends AppCompatActivity {
         TextView screenTitle = findViewById(R.id.listField);
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
 
+        articleID.clear();
+        articleTitle.clear();
+        articleDate.clear();
+        articleAuthor.clear();
+
+        loadAPI();
         setUpArticleModels();
 
         Article_RecyclerViewAdapter adapter = new Article_RecyclerViewAdapter(this, articleModels);
@@ -36,17 +50,31 @@ public class DocListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         screenTitle.setText(title);
-
     }
 
-    private void setUpArticleModels() {
-        String[] articleTitle = getResources().getStringArray(R.array.title);
-        String[] articleDate = getResources().getStringArray(R.array.submit_date);
-        String[] articleAuthor = getResources().getStringArray(R.array.author);
-
-        for(int i = 0; i<articleTitle.length; i++) {
-            articleModels.add(new ArticleModel(articleTitle[i], articleDate[i], articleAuthor[i]));
+    private void loadAPI(){
+        for (int i = 0; i < APIHandle.docs.size(); i++){
+            articleID.add(APIHandle.docs.get(i).getId());
+            articleTitle.add(APIHandle.docs.get(i).getTitle());
+            articleDate.add(APIHandle.docs.get(i).getDate().toString());
+            articleAuthor.add(APIHandle.docs.get(i).getAuthors());
         }
+    }
+
+
+    private void setUpArticleModels() {
+        if (offset + 30 < articleID.size()) {
+            for(int i = offset; i < articleID.size(); i++) {
+                articleModels.add(new ArticleModel(articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
+            }
+        }
+        else {
+            Log.i(TAG, String.valueOf(articleID.size()));
+            for(int i = offset; i < articleID.size(); i++) {
+                articleModels.add(new ArticleModel(articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
+            }
+        }
+
     }
 
 

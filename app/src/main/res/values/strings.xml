@@ -1,58 +1,76 @@
 <resources>
     <string name="app_name">arXiv</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string-array name="title">
-        <item>Title 1</item>
-        <item>Title 2</item>
-        <item>Title 3</item>
-        <item>Title 4</item>
-        <item>Title 5</item>
-        <item>Title 6</item>
-        <item>Title 7</item>
-        <item>Title 8</item>
-        <item>Title 9</item>
-        <item>Title 10</item>
-        <item>Title 11</item>
-        <item>Title 12</item>
-        <item>Title 13</item>
-        <item>Title 14</item>
-        <item>Title 15</item>
-    </string-array>
+<!--    <string-array name="idA">-->
+<!--        <item>id 1</item>-->
+<!--        <item>id 2</item>-->
+<!--        <item>id 3</item>-->
+<!--        <item>id 4</item>-->
+<!--        <item>id 5</item>-->
+<!--        <item>id 6</item>-->
+<!--        <item>id 7</item>-->
+<!--        <item>id 8</item>-->
+<!--        <item>id 9</item>-->
+<!--        <item>id 10</item>-->
+<!--        <item>id 11</item>-->
+<!--        <item>id 12</item>-->
+<!--        <item>id 13</item>-->
+<!--        <item>id 14</item>-->
+<!--        <item>id 15</item>-->
+<!--    </string-array>-->
+
+<!--    <string-array name="title">-->
+<!--        <item>Title 1</item>-->
+<!--        <item>Title 2</item>-->
+<!--        <item>Title 3</item>-->
+<!--        <item>Title 4</item>-->
+<!--        <item>Title 5</item>-->
+<!--        <item>Title 6</item>-->
+<!--        <item>Title 7</item>-->
+<!--        <item>Title 8</item>-->
+<!--        <item>Title 9</item>-->
+<!--        <item>Title 10</item>-->
+<!--        <item>Title 11</item>-->
+<!--        <item>Title 12</item>-->
+<!--        <item>Title 13</item>-->
+<!--        <item>Title 14</item>-->
+<!--        <item>Title 15</item>-->
+<!--    </string-array>-->
 
 
-    <string-array name="author">
-        <item>Author 1</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-        <item>Author</item>
-    </string-array>
+<!--    <string-array name="author">-->
+<!--        <item>Author 1</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--        <item>Author</item>-->
+<!--    </string-array>-->
 
-    <string-array name="submit_date">
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-        <item>dd/mm/yyyy</item>
-    </string-array>
+<!--    <string-array name="submit_date">-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--        <item>dd/mm/yyyy</item>-->
+<!--    </string-array>-->
 </resources>
