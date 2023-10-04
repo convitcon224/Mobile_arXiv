@@ -65,13 +65,13 @@ public class DocListActivity extends AppCompatActivity {
     private void setUpArticleModels() {
         if (offset + 30 < articleID.size()) {
             for(int i = offset; i < articleID.size(); i++) {
-                articleModels.add(new ArticleModel(articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
+                articleModels.add(new ArticleModel(i,articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
             }
         }
         else {
             Log.i(TAG, String.valueOf(articleID.size()));
             for(int i = offset; i < articleID.size(); i++) {
-                articleModels.add(new ArticleModel(articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
+                articleModels.add(new ArticleModel(i,articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
             }
         }
 
@@ -80,15 +80,20 @@ public class DocListActivity extends AppCompatActivity {
 
     public void rowItemOnclick(View view) {
         if (onDocList) {
-            TextView tv = view.findViewById(R.id.titleText);
-            String t = tv.getText().toString();
-            Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
+            TextView tv = view.findViewById(R.id.article_position);
+
+            int t = Integer.parseInt(tv.getText().toString());
+//            Toast.makeText(this, String.valueOf(t), Toast.LENGTH_SHORT).show();
 //            DocListActivity dl = new DocListActivity();
 //            dl.title = t;
 //            dl = null;
 //            Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
 //            startActivity(docList);
-            Fragment article = new Article_Fragment();
+            Article_Fragment article = new Article_Fragment();
+            article.subDate = APIHandle.docs.get(t).getDate().toString();
+            article.artTit = APIHandle.docs.get(t).getTitle();
+            article.auName = APIHandle.docs.get(t).getAuthors();
+            article.absText = APIHandle.docs.get(t).getContent();
             onDocList = false;
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.activity_doclist, article).addToBackStack(null).commit();

@@ -47,14 +47,29 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void searchOnClick(View view) {
-        TextView tit = findViewById(R.id.field1);
+        TextView detail = findViewById(R.id.field1);
+        Spinner mySpinner = (Spinner) findViewById(R.id.spinner1);
+        String text = mySpinner.getSelectedItem().toString();
 
-        DocListActivity temp = new DocListActivity();
-        temp.title = tit.getText().toString();
-        temp = null;
+//        Intent docl = new Intent(getApplicationContext(), DocListActivity.class);
+//        startActivity(docl);
+//        Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
 
-        Intent docl = new Intent(getApplicationContext(), DocListActivity.class);
-        startActivity(docl);
-        Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+        if(detail.getText().toString().length() < 1){
+            Toast.makeText(this, "Cannot query nothing", Toast.LENGTH_SHORT).show();
+        } else {
+            DocListActivity.title = text+" "+detail.getText().toString();
+            String[] message= {text,detail.getText().toString()};
+            Intent intent=new Intent();
+            intent.putExtra("MESSAGE",message);
+            setResult(AppCompatActivity.RESULT_OK, intent);
+            finish();//finishing activity
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(AppCompatActivity.RESULT_CANCELED);
+        super.onBackPressed();
     }
 }

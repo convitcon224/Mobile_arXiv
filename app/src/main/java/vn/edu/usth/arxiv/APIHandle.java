@@ -1,19 +1,5 @@
 package vn.edu.usth.arxiv;
 
-import android.util.Log;
-import android.widget.TextView;
-
-import com.android.volley.NetworkError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;

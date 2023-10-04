@@ -20,8 +20,6 @@ public class CopyrightFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        arXiv ax = new arXiv();
-        ax.onarXiv = true;
-        ax = null;
+        arXiv.onarXiv = true;
     }
 }

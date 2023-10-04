@@ -35,6 +35,7 @@ public class Article_RecyclerViewAdapter extends RecyclerView.Adapter<Article_Re
         holder.tvTitle.setText(articleModels.get(position).getArticleTitle());
         holder.tvDate.setText(articleModels.get(position).getArticleDate());
         holder.tvAuthor.setText(articleModels.get(position).getArticleAuthor());
+        holder.tvPosition.setText(articleModels.get(position).getArticlePosition());
     }
 
     @Override
@@ -44,13 +45,14 @@ public class Article_RecyclerViewAdapter extends RecyclerView.Adapter<Article_Re
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvIDList, tvTitle, tvDate, tvAuthor;
+        TextView tvIDList, tvTitle, tvDate, tvAuthor, tvPosition;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIDList = itemView.findViewById(R.id.idArticle);
             tvTitle = itemView.findViewById(R.id.titleText);
             tvDate = itemView.findViewById(R.id.dateText);
             tvAuthor = itemView.findViewById(R.id.authorText);
+            tvPosition = itemView.findViewById(R.id.article_position);
         }
     }
 }

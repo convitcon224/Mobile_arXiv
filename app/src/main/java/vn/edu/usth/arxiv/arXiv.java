@@ -50,7 +50,9 @@ public class arXiv extends AppCompatActivity{
         actionBar.setHomeAsUpIndicator(R.drawable.account);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String[] items = {"Astrophysics", "Condensed Matter", "General Relativity and Quantum Cosmology", "Physics", "Quantum Physics", "High Energy Physics", "Mathematics", "Computer Sciences", "Nonlinear Sciences", "Quantitative Biology", "Quantitative Finance", "Statistics", "Electrical Engineering and Systems Science", "Economics"};
+        String[] items = {"Astrophysics of Galaxies", "Condensed Matter", "General Relativity and Quantum Cosmology", "Mathematical Physics",
+                "Quantum Physics", "High Energy Physics", "Algebraic Geometry", "Computer Sciences", "Nonlinear Sciences", "Quantitative Biology",
+                "Quantitative Finance", "Statistics Theory", "Electrical Engineering and Systems Science", "General Economics"};
         listView = (ListView)findViewById(R.id.list_view);
         tvAdapter adapter = new tvAdapter(this,items);
         listView.setAdapter(adapter);
@@ -66,9 +68,7 @@ public class arXiv extends AppCompatActivity{
             String tit = tv.getText().toString();
 //            Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
 //            Log.i(TAG, "itemOnClick: onarXiv"+onarXiv);
-            DocListActivity dl = new DocListActivity();
-            dl.title = tit;
-            dl = null;
+            DocListActivity.title = tit;
 
             loadingdialog.startLoadingdialog();
 
@@ -105,14 +105,17 @@ public class arXiv extends AppCompatActivity{
 //                Log.i(TAG, "itemOnClick: jjj");
 //            }
 
-            getData();
+            getData("cat",tit);
         }
     }
 
-    public void getData(){
+    public void getData(String prefix, String detail){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://export.arxiv.org/api/query?search_query=all:electron+AND+all:proton";
+//        String url = "https://export.arxiv.org/api/query?search_query=all:electron+AND+all:proton";
+        String url = "https://export.arxiv.org/api/query?search_query=" + prefix +":"+ detail + "&sortBy=lastUpdatedDate&sortOrder=ascending";
+//        "http://export.arxiv.org/api/query?search_query=ti:"electron thermal conductivity"&sortBy=lastUpdatedDate&sortOrder=ascending"
+
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -225,11 +228,34 @@ public class arXiv extends AppCompatActivity{
             startActivity(login);
         } else if (id==R.id.search) {
             Intent searching = new Intent(getApplicationContext(),SearchActivity.class);
-            startActivity(searching);
+            startActivityForResult(searching,2);
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+        {
+            if (resultCode == AppCompatActivity.RESULT_OK){
+                String prefix = "all";
+                final String[] result = data.getStringArrayExtra("MESSAGE");
+
+                if (result[0] == "Title"){
+                    prefix = "ti";
+                } else if (result[0] == "Author") {
+                    prefix = "au";
+                } else if (result[0] == "Keywords") {
+                    prefix = "all";
+                }
+                loadingdialog.startLoadingdialog();
+                getData(prefix,result[1]);
+            }
+
+        }
+    }
 
     @Override
     public void onBackPressed() {

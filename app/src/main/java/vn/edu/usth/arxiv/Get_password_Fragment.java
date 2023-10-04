@@ -28,9 +28,7 @@ public class Get_password_Fragment extends Fragment {
             }
         });
 
-        LoginActivity temp = new LoginActivity();
-        temp.onLogin = false;
-        temp = null;
+        LoginActivity.onLogin = false;
 
         return view;
     }
@@ -38,8 +36,6 @@ public class Get_password_Fragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        LoginActivity temp = new LoginActivity();
-        temp.onLogin = true;
-        temp = null;
+        LoginActivity.onLogin = true;
     }
 }
