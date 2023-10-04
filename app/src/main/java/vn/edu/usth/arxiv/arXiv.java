@@ -1,25 +1,19 @@
 package vn.edu.usth.arxiv;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.NetworkError;
 import com.android.volley.ParseError;
@@ -31,140 +25,78 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
-public class arXiv extends AppCompatActivity{
+public class arXiv extends AppCompatActivity {
+
+    private final Dialog loadingdialog = new Dialog(arXiv.this);
+
     private static final String TAG = "arXivActivity";
 
     public static boolean onarXiv = true;
 
-    private ListView listView;
+    private ViewPager2 viewPager2;
+    private BottomNavigationView bottomNavigationView;
 
-    private final Dialog loadingdialog = new Dialog(arXiv.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.arxiv);
+
+        viewPager2 = findViewById(R.id.view_pager2);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.account);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String[] items = {"Astrophysics of Galaxies", "Condensed Matter", "General Relativity and Quantum Cosmology", "Mathematical Physics",
-                "Quantum Physics", "High Energy Physics", "Algebraic Geometry", "Computer Sciences", "Nonlinear Sciences", "Quantitative Biology",
-                "Quantitative Finance", "Statistics Theory", "Electrical Engineering and Systems Science", "General Economics"};
-        listView = (ListView)findViewById(R.id.list_view);
-        tvAdapter adapter = new tvAdapter(this,items);
-        listView.setAdapter(adapter);
-
 
         Log.i(TAG, "App Created");
-    }
 
+        Viewpager2Adapter adapter = new Viewpager2Adapter(this);
+        viewPager2.setAdapter(adapter);
 
-    public void itemOnClick(View view){
-        if (onarXiv){
-            TextView tv = view.findViewById(R.id.tv_item);
-            String tit = tv.getText().toString();
-//            Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
-//            Log.i(TAG, "itemOnClick: onarXiv"+onarXiv);
-            DocListActivity.title = tit;
-
-            loadingdialog.startLoadingdialog();
-
-//            final Handler handler = new Handler(Looper.getMainLooper()) {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    // This method is executed in main thread
-//                    String content = msg.getData().getString("server_response");
-//
-//                    if (content.equals("getDataDone")){
-//                        loadingdialog.dismissdialog();
-//                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
-//                        startActivity(docList);
-//                    }
-//                }
-//            };
-
-
-            // Thread gets data
-//            Thread t = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    getData();
-////                    Bundle bundle = new Bundle();
-////                    bundle.putString("server_response", "getDataDone");
-////                    Message msg = new Message();
-////                    msg.setData(bundle);
-////                    handler.sendMessage(msg);
-//                }
-//            });
-//
-//            if ( t.getState() == Thread.State.NEW ){
-//                t.start();
-//                Log.i(TAG, "itemOnClick: jjj");
-//            }
-
-            getData("cat",tit);
-        }
-    }
-
-    public void getData(String prefix, String detail){
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url = "https://export.arxiv.org/api/query?search_query=all:electron+AND+all:proton";
-        String url = "https://export.arxiv.org/api/query?search_query=" + prefix +":"+ detail + "&sortBy=lastUpdatedDate&sortOrder=ascending";
-//        "http://export.arxiv.org/api/query?search_query=ti:"electron thermal conductivity"&sortBy=lastUpdatedDate&sortOrder=ascending"
-
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        APIHandle apiHandle = new APIHandle();
-                        apiHandle.getDocument(response);
-                        Log.i("TAG response", String.valueOf(response.length()));
-                        loadingdialog.dismissdialog();
-                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
-                        startActivity(docList);
-                    }
-                }, new Response.ErrorListener() {
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-//                textView.setText("That didn't work!");
-                if (error instanceof TimeoutError) {
-                    //For example your timeout is 3 seconds but the operation takes longer
-                    Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (error instanceof ServerError) {
-                    //error in server
-                    Toast.makeText(getApplicationContext(), "Sever Error", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (error instanceof NetworkError) {
-                    //network is disconnect
-                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                }
-
-                else if (error instanceof ParseError) {
-                    //for cant convert data
-                    Toast.makeText(getApplicationContext(), "Parse Error", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
-                    //other error
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                switch (position) {
+                    case 0:
+                        bottomNavigationView.getMenu().findItem(R.id.page_home).setChecked(true);
+                        break;
+                    case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.page_favorite).setChecked(true);
+                        break;
+                    case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.page_downloaded).setChecked(true);
+                        break;
+                    case 3:
+                        bottomNavigationView.getMenu().findItem(R.id.page_more).setChecked(true);
+                        break;
                 }
             }
         });
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.page_home) {
+                    viewPager2.setCurrentItem(0);
+                } else if (item.getItemId() == R.id.page_favorite) {
+                    viewPager2.setCurrentItem(1);
+                } else if (item.getItemId() == R.id.page_downloaded) {
+                    viewPager2.setCurrentItem(2);
+                } else if (item.getItemId() == R.id.page_more) {
+                    viewPager2.setCurrentItem(3);
+                }
+                return true;
+            }
+        });
 
-    // Add the request to the RequestQueue.
-        queue.add(stringRequest);
     }
 
-    @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main,menu);
         return super.onCreateOptionsMenu(menu);
@@ -181,7 +113,6 @@ public class arXiv extends AppCompatActivity{
         getSupportFragmentManager().popBackStack();
     }
 
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        String[] menuFragmentTag = {"AboutisOpened", "ContectisOpened", "PolicyisOpened", "DonateisOpened", "AccountisOpened", "CopyrightisOpened"};
         int id = item.getItemId();
@@ -257,6 +188,112 @@ public class arXiv extends AppCompatActivity{
         }
     }
 
+    public void itemOnClick(View view) {
+        if (onarXiv){
+            TextView tv = view.findViewById(R.id.tv_item);
+            String tit = tv.getText().toString();
+//            Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
+//            Log.i(TAG, "itemOnClick: onarXiv"+onarXiv);
+            DocListActivity.title = tit;
+
+            loadingdialog.startLoadingdialog();
+//            final Handler handler = new Handler(Looper.getMainLooper()) {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    // This method is executed in main thread
+//                    String content = msg.getData().getString("server_response");
+//
+//                    if (content.equals("getDataDone")){
+//                        loadingdialog.dismissdialog();
+//                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
+//                        startActivity(docList);
+//                    }
+//                }
+//            };
+
+
+            // Thread gets data
+//            Thread t = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    getData();
+////                    Bundle bundle = new Bundle();
+////                    bundle.putString("server_response", "getDataDone");
+////                    Message msg = new Message();
+////                    msg.setData(bundle);
+////                    handler.sendMessage(msg);
+//                }
+//            });
+//
+//            if ( t.getState() == Thread.State.NEW ){
+//                t.start();
+//                Log.i(TAG, "itemOnClick: jjj");
+//            }
+
+            getData("cat",tit);
+        }
+    }
+
+    public void getData(String prefix, String detail){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+//        String url = "https://export.arxiv.org/api/query?search_query=all:electron+AND+all:proton";
+        String url = "https://export.arxiv.org/api/query?search_query=" + prefix +":"+ detail + "&sortBy=lastUpdatedDate&sortOrder=ascending";
+//        "http://export.arxiv.org/api/query?search_query=ti:"electron thermal conductivity"&sortBy=lastUpdatedDate&sortOrder=ascending"
+
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        APIHandle apiHandle = new APIHandle();
+                        apiHandle.getDocument(response);
+                        Log.i("TAG response", String.valueOf(response.length()));
+                        loadingdialog.dismissdialog();
+                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
+                        startActivity(docList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                textView.setText("That didn't work!");
+                if (error instanceof TimeoutError) {
+                    //For example your timeout is 3 seconds but the operation takes longer
+                    Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismissdialog();
+                }
+
+                else if (error instanceof ServerError) {
+                    //error in server
+                    Toast.makeText(getApplicationContext(), "Sever Error", Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismissdialog();
+                }
+
+                else if (error instanceof NetworkError) {
+                    //network is disconnect
+                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismissdialog();
+                }
+
+                else if (error instanceof ParseError) {
+                    //for cant convert data
+                    Toast.makeText(getApplicationContext(), "Parse Error", Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismissdialog();
+                }
+
+                else {
+                    //other error
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    loadingdialog.dismissdialog();
+                }
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -264,10 +301,6 @@ public class arXiv extends AppCompatActivity{
             getSupportActionBar().show();
     }
 
-    public void uploadButtonOnClick(View view) {
-        Intent upload = new Intent(getApplicationContext(),UploadActivity.class);
-        startActivity(upload);
-    }
 
     @Override
     protected void onStart() {

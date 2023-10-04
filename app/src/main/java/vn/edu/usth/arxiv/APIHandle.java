@@ -1,17 +1,11 @@
 package vn.edu.usth.arxiv;
 
-import android.util.Log;
-
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
 public class APIHandle {

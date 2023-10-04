@@ -1,134 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Article_Fragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".Article_Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/primary_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="arXiv"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/favorite_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_favorite_border_24"
+            android:tag="unfavorite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/options"
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/primary_color"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/favorite_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="false"
-                    android:src="@drawable/ic_action_unfavorite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.86"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/share_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:src="@android:drawable/ic_menu_share"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/title"
-                    android:layout_width="80dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:src="@drawable/logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/download_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginRight="12dp"
-                    android:src="@android:drawable/stat_sys_download"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/favorite_button"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.466" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-
-
-        <ScrollView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="never">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/submit_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/submit_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Submitted on 20 Sep 2023"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginLeft="10dp"/>
+                android:layout_marginStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Submitted on 20 Sep 2023" />
 
-                <TextView
-                    android:id="@+id/article_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Intrinsic superconducting diode effects in tilted Weyl and Dirac semimetals"
-                    android:paddingLeft="10dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="20dp"
+                android:text="Intrinsic superconducting diode effects in tilted Weyl and Dirac semimetals"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kai Chen, Bishnu Karki, Pavan Hosur"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Kai Chen, Bishnu Karki, Pavan Hosur" />
 
-                <View
-                    android:id="@+id/horizontal_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/black" />
+            <View
+                android:id="@+id/horizontal_line"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/black" />
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="We explore Weyl and Dirac semimetals with tilted nodes as platforms for realizing an intrinsic superconducting diode effect. Although tilting breaks sufficient spatial and time-reversal symmetries, we prove that -- at least for conventional s-wave singlet pairing -- the effect is forbidden by an emergent particle-hole symmetry at low energies if the Fermi level is tuned to the nodes. Then, as a stepping stone to the three-dimensional semimetals, we analyze a minimal one-dimensional model with a tilted helical node using Ginzburg-Landau theory. While one might naively expect a drastic enhancement of the effect when the node turns from type-I to type-II, we find that the presence of multiple Fermi pockets is more important as it enables multiple pairing amplitudes with indepedent contributions to supercurrents in opposite directions. Equipped with this insight, we construct minimal lattice models of Weyl and Dirac semimetals and study the superconducting diode effect in them. Once again, we see a substantial enhancement when the normal state has multiple Fermi pockets per node that can accommodate more than one pairing channel. In summary, this study sheds light on the key factors governing the intrinsic superconducting diode effect in systems with asymmetric band structures and paves the way for realizing it in topological semimetals. "
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-        </ScrollView>
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:padding="20dp"
+                android:text="We explore Weyl and Dirac semimetals with tilted nodes as platforms for realizing an intrinsic superconducting diode effect. Although tilting breaks sufficient spatial and time-reversal symmetries, we prove that -- at least for conventional s-wave singlet pairing -- the effect is forbidden by an emergent particle-hole symmetry at low energies if the Fermi level is tuned to the nodes. Then, as a stepping stone to the three-dimensional semimetals, we analyze a minimal one-dimensional model with a tilted helical node using Ginzburg-Landau theory. While one might naively expect a drastic enhancement of the effect when the node turns from type-I to type-II, we find that the presence of multiple Fermi pockets is more important as it enables multiple pairing amplitudes with indepedent contributions to supercurrents in opposite directions. Equipped with this insight, we construct minimal lattice models of Weyl and Dirac semimetals and study the superconducting diode effect in them. Once again, we see a substantial enhancement when the normal state has multiple Fermi pockets per node that can accommodate more than one pairing channel. In summary, this study sheds light on the key factors governing the intrinsic superconducting diode effect in systems with asymmetric band structures and paves the way for realizing it in topological semimetals. "
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
 
-</FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/download_button"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="47dp"
+            android:background="@drawable/primary_button"
+            android:text="Download PDF"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ShareBtn"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="55dp"
+            android:src="@drawable/baseline_share_24"
+            android:background="@drawable/primary_button"
+            android:text="Share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

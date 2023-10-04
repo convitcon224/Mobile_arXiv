@@ -8,9 +8,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"
-        app:cardElevation="8dp"
+        android:layout_margin="10dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:onClick="rowItemOnclick">
+
             <TextView
                 android:id="@+id/article_position"
                 android:layout_width="0dp"
@@ -28,18 +29,14 @@
                 android:textSize="0dp"/>
 
             <TextView
-                android:id="@+id/idArticle"
-                android:paddingTop="12dp"
-                android:textSize="11dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="idddddddddd" />
-
-            <TextView
                 android:id="@+id/titleText"
+                android:paddingTop="12dp"
+                android:paddingStart="5dp"
                 android:textColor="@color/black"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Super Long Titleeeeeeeeeeeee" />
@@ -47,19 +44,31 @@
             <TextView
                 android:id="@+id/dateText"
                 android:layout_marginBottom="15dp"
+                android:paddingStart="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd/mm/yyyy"
-                android:textColor="@color/black"/>
+                android:text="dd/mm/yyyy"/>
 
             <TextView
                 android:id="@+id/authorText"
-                android:textSize="20dp"
-                android:layout_marginBottom="12dp"
+                android:textSize="16dp"
+                android:paddingStart="5dp"
+                android:paddingBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="Author"
                 android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/idArticle"
+                android:paddingStart="6dp"
+                android:layout_width="wrap_content"
+                android:textSize="11dp"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content"
+                android:text="dd/mm/yyyy"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

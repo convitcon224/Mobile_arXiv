@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arXiv"
+    android:id="@+id/arxiv_activity"
+    android:background="@color/main_background">
+
+
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/main_upload"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:layout_marginRight="26dp"
+        android:layout_marginBottom="26dp"
+        android:contentDescription="upload"
+        android:scaleType="centerCrop"
+        android:onClick="uploadButtonOnClick"
+        android:src="@drawable/upload" />
+
+</RelativeLayout>

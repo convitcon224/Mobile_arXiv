@@ -1,14 +1,12 @@
 package vn.edu.usth.arxiv;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +26,15 @@ public class DocListActivity extends AppCompatActivity {
 
     private static int offset = 0;
 
+    ImageButton imageButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doclist);
+
+        getSupportActionBar().hide();
 
         TextView screenTitle = findViewById(R.id.listField);
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
@@ -50,6 +52,14 @@ public class DocListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         screenTitle.setText(title);
+
+        imageButton = findViewById(R.id.backBtn);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void loadAPI(){
@@ -105,6 +115,6 @@ public class DocListActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (onDocList)
-            getSupportActionBar().show();
+            getSupportActionBar().hide();
     }
 }
