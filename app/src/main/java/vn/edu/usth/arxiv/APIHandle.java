@@ -12,6 +12,14 @@ public class APIHandle {
     public static ArrayList<mDocument> docs = new ArrayList<>();
     public void getDocument(String dataxml){
         docs.clear();
+        processData(dataxml);
+    }
+
+    public void loadMore(String dataxml){
+        processData(dataxml);
+    }
+
+    private void processData(String dataxml){
         try{
             mDocument doc = new mDocument();
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -48,7 +56,6 @@ public class APIHandle {
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
 }

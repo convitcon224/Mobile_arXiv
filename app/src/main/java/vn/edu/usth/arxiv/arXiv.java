@@ -39,10 +39,16 @@ public class arXiv extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private BottomNavigationView bottomNavigationView;
 
+    private static RequestQueue mRequestQueue;
+    public static final String requestTAG = "stringRequestTAG";
+    public static String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arxiv);
+
+        mRequestQueue = Volley.newRequestQueue(this);
 
         viewPager2 = findViewById(R.id.view_pager2);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -234,11 +240,11 @@ public class arXiv extends AppCompatActivity {
         }
     }
 
-    public void getData(String prefix, String detail){
+    private void getData(String prefix, String detail){
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+//        RequestQueue queue = ((VolleyRequestQueue) getApplicationContext()).getRequestQueue();
 //        String url = "https://export.arxiv.org/api/query?search_query=all:electron+AND+all:proton";
-        String url = "https://export.arxiv.org/api/query?search_query=" + prefix +":"+ detail + "&sortBy=lastUpdatedDate&sortOrder=ascending";
+        url = "https://export.arxiv.org/api/query?search_query=" + prefix +":"+ detail + "&sortBy=lastUpdatedDate&sortOrder=descending&start=0&max_results=20";
 //        "http://export.arxiv.org/api/query?search_query=ti:"electron thermal conductivity"&sortBy=lastUpdatedDate&sortOrder=ascending"
 
 
@@ -289,9 +295,14 @@ public class arXiv extends AppCompatActivity {
                 }
             }
         });
+        stringRequest.setTag(requestTAG);
 
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        mRequestQueue.add(stringRequest);
+    }
+
+    public RequestQueue getRequestQueue() {
+        return mRequestQueue;
     }
 
     @Override

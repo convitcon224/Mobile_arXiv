@@ -1,14 +1,29 @@
 package vn.edu.usth.arxiv;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import java.util.ArrayList;
 
@@ -24,32 +39,65 @@ public class DocListActivity extends AppCompatActivity {
     private static ArrayList<String> articleDate = new ArrayList<>();
     private static ArrayList<String> articleAuthor = new ArrayList<>();
 
-    private static int offset = 0;
+    private int offset = 0;
+    private final int limit = 10;
+    private int start = 0;
+    private int max = 20;
+
+    private Article_RecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private ProgressBar loadingPB;
+    private NestedScrollView nestedSV;
 
     ImageButton imageButton;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doclist);
 
         getSupportActionBar().hide();
-
-        TextView screenTitle = findViewById(R.id.listField);
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
-
         articleID.clear();
         articleTitle.clear();
         articleDate.clear();
         articleAuthor.clear();
 
+        TextView screenTitle = findViewById(R.id.listField);
+        recyclerView = findViewById(R.id.mRecyclerView);
+        loadingPB = findViewById(R.id.idPBLoading);
+        nestedSV = findViewById(R.id.idNestedSV);
+
+
+
         loadAPI();
         setUpArticleModels();
 
-        Article_RecyclerViewAdapter adapter = new Article_RecyclerViewAdapter(this, articleModels);
-        recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        nestedSV.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // on scroll change we are checking when users scroll as bottom.
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    // on below line we are making our progress bar visible.
+
+                    if ((offset+limit)<articleID.size()){
+                        offset += limit;
+                        loadingPB.setVisibility(View.VISIBLE);
+                        setUpArticleModels();
+                    } else {
+                        loadingPB.setVisibility(View.VISIBLE);
+                        start = articleID.size();
+                        max += 20;
+                        loadMoreData();
+                    }
+
+                }
+            }
+        });
 
         screenTitle.setText(title);
 
@@ -60,6 +108,7 @@ public class DocListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
     }
 
     private void loadAPI(){
@@ -71,10 +120,20 @@ public class DocListActivity extends AppCompatActivity {
         }
     }
 
+    private void loadMoreAPI(){
+        for (int i = articleID.size(); i < APIHandle.docs.size(); i++){
+            articleID.add(APIHandle.docs.get(i).getId());
+            articleTitle.add(APIHandle.docs.get(i).getTitle());
+            articleDate.add(APIHandle.docs.get(i).getDate().toString());
+            articleAuthor.add(APIHandle.docs.get(i).getAuthors());
+        }
+    }
+
 
     private void setUpArticleModels() {
-        if (offset + 30 < articleID.size()) {
-            for(int i = offset; i < articleID.size(); i++) {
+        recyclerView.setVisibility(View.VISIBLE);
+        if (offset + limit < articleID.size()) {
+            for(int i = offset; i < offset+limit; i++) {
                 articleModels.add(new ArticleModel(i,articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
             }
         }
@@ -84,7 +143,9 @@ public class DocListActivity extends AppCompatActivity {
                 articleModels.add(new ArticleModel(i,articleID.get(i),articleTitle.get(i), articleDate.get(i), articleAuthor.get(i)));
             }
         }
-
+        adapter = new Article_RecyclerViewAdapter(DocListActivity.this, articleModels);
+        recyclerView.setAdapter(adapter);
+        loadingPB.setVisibility(View.INVISIBLE);
     }
 
 
@@ -111,6 +172,55 @@ public class DocListActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
     }
+
+
+    private void loadMoreData(){
+        arXiv temp = new arXiv();
+        String url = arXiv.url.substring(0,arXiv.url.indexOf("&start=")) + "&start=" + start + "&max_results=" + max;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        APIHandle apiHandle = new APIHandle();
+                        apiHandle.loadMore(response);
+                        loadMoreAPI();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                textView.setText("That didn't work!");
+                if (error instanceof TimeoutError) {
+                    //For example your timeout is 3 seconds but the operation takes longer
+                    Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (error instanceof ServerError) {
+                    //error in server
+                    Toast.makeText(getApplicationContext(), "Sever Error", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (error instanceof NetworkError) {
+                    //network is disconnect
+                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (error instanceof ParseError) {
+                    //for cant convert data
+                    Toast.makeText(getApplicationContext(), "Parse Error", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    //other error
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        // Add the request to the RequestQueue.
+        temp.getRequestQueue().add(stringRequest);
+    }
+
 
     public void onBackPressed() {
         super.onBackPressed();

@@ -3,7 +3,11 @@ package vn.edu.usth.arxiv;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
 
 public class Dialog {
     // 2 objects activity and dialog
@@ -26,6 +30,19 @@ public class Dialog {
         LayoutInflater inflater = activity.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.loading, null));
         builder.setCancelable(true);
+
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                arXiv temp = new arXiv();
+                RequestQueue requestQueue = temp.getRequestQueue();
+                if (requestQueue != null) {
+                    requestQueue.cancelAll(arXiv.requestTAG);
+                }
+                Toast.makeText(activity.getApplicationContext(), "Request is cancelled", Toast.LENGTH_SHORT).show();
+                temp = null;
+            }
+        });
 
         dialog = builder.create();
         dialog.show();
