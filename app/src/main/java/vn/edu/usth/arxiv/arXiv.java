@@ -125,13 +125,13 @@ public class arXiv extends AppCompatActivity {
         if (id==R.id.about){
             removeFragments();
             AboutFragment aboutFragment = new AboutFragment();
-            onarXiv = false;
+            setupNotHomeFrag();
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.arxiv_activity, aboutFragment,"AboutisOpened").addToBackStack(null).commit();
         } else if (id==R.id.contact) {
             removeFragments();
             Fragment fragment = new ContactFragment();
-            onarXiv = false;
+            setupNotHomeFrag();
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.arxiv_activity, fragment,"ContectisOpened").addToBackStack(null).commit();
         } else if (id==R.id.report) {
@@ -139,19 +139,19 @@ public class arXiv extends AppCompatActivity {
         } else if (id==R.id.policy) {
             removeFragments();
             Fragment fragment = new PolicyFragment();
-            onarXiv = false;
+            setupNotHomeFrag();
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.arxiv_activity, fragment,"PolicyisOpened").addToBackStack(null).commit();
         } else if (id==R.id.copyright) {
             removeFragments();
             Fragment fragment = new CopyrightFragment();
-            onarXiv = false;
+            setupNotHomeFrag();
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.arxiv_activity, fragment,"CopyrightisOpened").addToBackStack(null).commit();
         } else if (id==R.id.donate) {
             removeFragments();
             Fragment fragment = new DonateFragment();
-            onarXiv = false;
+            setupNotHomeFrag();
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.arxiv_activity, fragment,"DonateisOpened").addToBackStack(null).commit();
         } else if (id==android.R.id.home) {
@@ -161,13 +161,23 @@ public class arXiv extends AppCompatActivity {
 //            onarXiv = false;
 //            getSupportFragmentManager().beginTransaction().replace(
 //                    R.id.arxiv_activity, fragment,"AccountisOpened").addToBackStack(null).commit();
-            Intent login = new Intent(getApplicationContext(),LoginActivity.class);
-            startActivity(login);
+            if (onarXiv) {
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+            } else {
+                onBackPressed();
+            }
         } else if (id==R.id.search) {
             Intent searching = new Intent(getApplicationContext(),SearchActivity.class);
             startActivityForResult(searching,2);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupNotHomeFrag(){
+        onarXiv = false;
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_arrow);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -308,8 +318,11 @@ public class arXiv extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (onarXiv)
+        if (onarXiv){
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.account);
+            bottomNavigationView.setVisibility(View.VISIBLE);
             getSupportActionBar().show();
+        }
     }
 
 
