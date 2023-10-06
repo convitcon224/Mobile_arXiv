@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class Article_Fragment extends Fragment {
 
@@ -25,6 +30,8 @@ public class Article_Fragment extends Fragment {
     public static String absText = "***";
     public static String trackID = "";
     private Context mContext;
+    private DatabaseReference mDatabase;
+    private FirebaseDatabase mInstance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,29 +48,55 @@ public class Article_Fragment extends Fragment {
         authorsName.setText(auName);
         abstractText.setText(absText);
 
+        mInstance = FirebaseDatabase.getInstance();
+        mDatabase = mInstance.getReference("users");
+
         mContext = getContext();
 
         ImageView favorite = view.findViewById(R.id.favorite_button);
         Button download = view.findViewById(R.id.download_button);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            if (FavoriteFragment.favorites.contains("null")){
+                FavoriteFragment.favorites = FavoriteFragment.favorites.replace("null","");
+                FavoriteFragment.titFav = FavoriteFragment.titFav.replaceAll("null", "");
+                FavoriteFragment.datFav = FavoriteFragment.datFav.replaceAll("null", "");
+                FavoriteFragment.auFav = FavoriteFragment.auFav.replaceAll("null", "");
+            }
+            if (FavoriteFragment.favorites.contains(trackID)){
+                favorite.setImageResource(R.drawable.baseline_favorite_24);
+                favorite.setTag("favorite");
+            } else {
+                favorite.setImageResource(R.drawable.baseline_favorite_border_24);
+                favorite.setTag("unfavorite");
+            }
+        }
+
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // If not login yet
-                Intent login = new Intent(getActivity().getApplicationContext(),LoginActivity.class);
-                startActivity(login);
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                    switch (favorite.getTag().toString()) {
+                        case "unfavorite": {
+                            favorite.setImageResource(R.drawable.baseline_favorite_24);
+                            favorite.setTag("favorite");
+                            addToFavorite();
+                            break;
+                        }
+                        case "favorite": {
+                            favorite.setImageResource(R.drawable.baseline_favorite_border_24);
+                            favorite.setTag("unfavorite");
+                            removeFromFavorite();
+                            break;
+                        }
+                    }
 
-                // TODO: logined
-                switch (favorite.getTag().toString()) {
-                    case "unfavorite":
-                        favorite.setImageResource(R.drawable.baseline_favorite_24);
-                        favorite.setTag("favorite");
-                        break;
-                    case "favorite":
-                        favorite.setImageResource(R.drawable.baseline_favorite_border_24);
-                        favorite.setTag("unfavorite");
-                        break;
+                } else {
+                    Intent login = new Intent(getActivity().getApplicationContext(),LoginActivity.class);
+                    startActivity(login);
                 }
+
             }
         });
 
@@ -76,6 +109,36 @@ public class Article_Fragment extends Fragment {
 
         return view;
     }
+//    public static String subDate = "%%%";
+//    public static String artTit = "###";
+//    public static String auName = "&&&";
+//    public static String absText = "***";
+//    public static String trackID = "";
+    private void addToFavorite(){
+        FavoriteFragment.favorites += "," + trackID;
+        FavoriteFragment.titFav += "," + artTit;
+        FavoriteFragment.datFav += "," + subDate;
+        FavoriteFragment.auFav += "," + auName;
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child(id).child("favorite").setValue(FavoriteFragment.favorites);
+        mDatabase.child(id).child("title").setValue(FavoriteFragment.titFav);
+        mDatabase.child(id).child("date").setValue(FavoriteFragment.datFav);
+        mDatabase.child(id).child("author").setValue(FavoriteFragment.auFav);
+    }
+
+    private void removeFromFavorite(){
+        FavoriteFragment.favorites = FavoriteFragment.favorites.replaceAll("," + trackID, "");
+        FavoriteFragment.titFav = FavoriteFragment.titFav.replaceAll("," + artTit, "");
+        FavoriteFragment.datFav = FavoriteFragment.datFav.replaceAll("," + subDate, "");
+        FavoriteFragment.auFav = FavoriteFragment.auFav.replaceAll("," + auName, "");
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child(id).child("favorite").setValue(FavoriteFragment.favorites);
+        mDatabase.child(id).child("title").setValue(FavoriteFragment.titFav);
+        mDatabase.child(id).child("date").setValue(FavoriteFragment.datFav);
+        mDatabase.child(id).child("author").setValue(FavoriteFragment.auFav);
+    }
+
+
 
     private void downloadPDF(){
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse("https://export.arxiv.org/pdf/" + trackID));

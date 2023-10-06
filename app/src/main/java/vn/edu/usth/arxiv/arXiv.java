@@ -30,6 +30,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class arXiv extends AppCompatActivity {
 
@@ -43,8 +46,11 @@ public class arXiv extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private BottomNavigationView bottomNavigationView;
 
-    private static RequestQueue mRequestQueue;
+    public static RequestQueue mRequestQueue;
+    private DatabaseReference mDatabase;
+    private FirebaseDatabase mInstance;
     public static final String requestTAG = "stringRequestTAG";
+    public static final String requestTAGFav = "stringRequestTAGFav";
     public static String url;
 
     @Override
@@ -52,12 +58,16 @@ public class arXiv extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arxiv);
         FirebaseAuth.getInstance().signOut();
+        FavoriteFragment.favorites = "";
 
         mRequestQueue = Volley.newRequestQueue(this);
 
         viewPager2 = findViewById(R.id.view_pager2);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        mInstance = FirebaseDatabase.getInstance();
+        mDatabase = mInstance.getReference("users");
+        mInstance.getReference("app_title").setValue("arXiv");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.account);
@@ -183,19 +193,24 @@ public class arXiv extends AppCompatActivity {
         }
     }
 
+    public void rowItemOnclickFav(View view){
+
+    }
+
     public void itemOnClickMore(View view){
 //        String[] menuFragmentTag = {"AboutisOpened", "ContectisOpened", "PolicyisOpened", "DonateisOpened", "AccountisOpened", "CopyrightisOpened"};
         if (onarXiv){
             TextView tv = view.findViewById(R.id.tv_mor_item);
             String tit = tv.getText().toString();
             switch (tit) {
-                case "About us":
+                case "About us": {
                     removeFragments();
                     AboutFragment aboutFragment = new AboutFragment();
                     setupNotHomeFrag();
                     getSupportFragmentManager().beginTransaction().replace(
                             R.id.arxiv_activity, aboutFragment, "AboutisOpened").addToBackStack(null).commit();
                     break;
+                }
                 case "Contact": {
                     removeFragments();
                     Fragment fragment = new ContactFragment();
@@ -253,12 +268,33 @@ public class arXiv extends AppCompatActivity {
                     break;
                 }
                 case "Log out": {
+                    loadingNCancelable.startLoadingdialog();
                     viewPager2.setCurrentItem(0);
                     FirebaseAuth.getInstance().signOut();
+                    FavoriteFragment.favorites = "";
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    loadingNCancelable.dismissdialog();
                 }
             }
         }
     }
+
+//    public void itemOnClickFav(View view) {
+//        if (onarXiv) {
+//            TextView tv = view.findViewById(R.id.tv_fav_item);
+//            String tit = tv.getText().toString();
+//            switch (tit) {
+//                case "About us": {
+////                    createUserNode();
+//                    Log.i(TAG, "itemOnClickFav: ");
+//                    break;
+//                }
+//                case "Contact": {
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
     private void getData(String prefix, String detail){
         // Instantiate the RequestQueue.

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "173685576789",
+    "firebase_url": "https://arxiv-6c16b-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "arxiv-6c16b",
     "storage_bucket": "arxiv-6c16b.appspot.com"
   },
