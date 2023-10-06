@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "173685576789",
+    "project_id": "arxiv-6c16b",
+    "storage_bucket": "arxiv-6c16b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173685576789:android:e346e18b28c8746b8f70dc",
+        "android_client_info": {
+          "package_name": "vn.edu.usth.arxiv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAILQaegMSikYtNwJiykwcT51xiAKRNDNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

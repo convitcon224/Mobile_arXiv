@@ -25,12 +25,16 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class arXiv extends AppCompatActivity {
 
     private final Dialog loadingdialog = new Dialog(arXiv.this);
+    private final DialogNCancelable loadingNCancelable = new DialogNCancelable(arXiv.this);
 
     private static final String TAG = "arXivActivity";
 
@@ -47,6 +51,7 @@ public class arXiv extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arxiv);
+        FirebaseAuth.getInstance().signOut();
 
         mRequestQueue = Volley.newRequestQueue(this);
 
@@ -120,47 +125,8 @@ public class arXiv extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        String[] menuFragmentTag = {"AboutisOpened", "ContectisOpened", "PolicyisOpened", "DonateisOpened", "AccountisOpened", "CopyrightisOpened"};
         int id = item.getItemId();
-        if (id==R.id.about){
-            removeFragments();
-            AboutFragment aboutFragment = new AboutFragment();
-            setupNotHomeFrag();
-            getSupportFragmentManager().beginTransaction().replace(
-                    R.id.arxiv_activity, aboutFragment,"AboutisOpened").addToBackStack(null).commit();
-        } else if (id==R.id.contact) {
-            removeFragments();
-            Fragment fragment = new ContactFragment();
-            setupNotHomeFrag();
-            getSupportFragmentManager().beginTransaction().replace(
-                    R.id.arxiv_activity, fragment,"ContectisOpened").addToBackStack(null).commit();
-        } else if (id==R.id.report) {
-            Toast.makeText(this, "Report Clicked", Toast.LENGTH_SHORT).show();
-        } else if (id==R.id.policy) {
-            removeFragments();
-            Fragment fragment = new PolicyFragment();
-            setupNotHomeFrag();
-            getSupportFragmentManager().beginTransaction().replace(
-                    R.id.arxiv_activity, fragment,"PolicyisOpened").addToBackStack(null).commit();
-        } else if (id==R.id.copyright) {
-            removeFragments();
-            Fragment fragment = new CopyrightFragment();
-            setupNotHomeFrag();
-            getSupportFragmentManager().beginTransaction().replace(
-                    R.id.arxiv_activity, fragment,"CopyrightisOpened").addToBackStack(null).commit();
-        } else if (id==R.id.donate) {
-            removeFragments();
-            Fragment fragment = new DonateFragment();
-            setupNotHomeFrag();
-            getSupportFragmentManager().beginTransaction().replace(
-                    R.id.arxiv_activity, fragment,"DonateisOpened").addToBackStack(null).commit();
-        } else if (id==android.R.id.home) {
-//            removeFragments(menuFragmentTag);
-//            Fragment fragment = new Login_Fragment();
-//            getSupportActionBar().hide();
-//            onarXiv = false;
-//            getSupportFragmentManager().beginTransaction().replace(
-//                    R.id.arxiv_activity, fragment,"AccountisOpened").addToBackStack(null).commit();
+        if (id==android.R.id.home) {
             if (onarXiv) {
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
@@ -204,49 +170,93 @@ public class arXiv extends AppCompatActivity {
         }
     }
 
+
     public void itemOnClick(View view) {
         if (onarXiv){
             TextView tv = view.findViewById(R.id.tv_item);
             String tit = tv.getText().toString();
-//            Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
-//            Log.i(TAG, "itemOnClick: onarXiv"+onarXiv);
             DocListActivity.title = tit;
 
             loadingdialog.startLoadingdialog();
-//            final Handler handler = new Handler(Looper.getMainLooper()) {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    // This method is executed in main thread
-//                    String content = msg.getData().getString("server_response");
-//
-//                    if (content.equals("getDataDone")){
-//                        loadingdialog.dismissdialog();
-//                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
-//                        startActivity(docList);
-//                    }
-//                }
-//            };
-
-
-            // Thread gets data
-//            Thread t = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    getData();
-////                    Bundle bundle = new Bundle();
-////                    bundle.putString("server_response", "getDataDone");
-////                    Message msg = new Message();
-////                    msg.setData(bundle);
-////                    handler.sendMessage(msg);
-//                }
-//            });
-//
-//            if ( t.getState() == Thread.State.NEW ){
-//                t.start();
-//                Log.i(TAG, "itemOnClick: jjj");
-//            }
 
             getData("cat",tit);
+        }
+    }
+
+    public void itemOnClickMore(View view){
+//        String[] menuFragmentTag = {"AboutisOpened", "ContectisOpened", "PolicyisOpened", "DonateisOpened", "AccountisOpened", "CopyrightisOpened"};
+        if (onarXiv){
+            TextView tv = view.findViewById(R.id.tv_mor_item);
+            String tit = tv.getText().toString();
+            switch (tit) {
+                case "About us":
+                    removeFragments();
+                    AboutFragment aboutFragment = new AboutFragment();
+                    setupNotHomeFrag();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.arxiv_activity, aboutFragment, "AboutisOpened").addToBackStack(null).commit();
+                    break;
+                case "Contact": {
+                    removeFragments();
+                    Fragment fragment = new ContactFragment();
+                    setupNotHomeFrag();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.arxiv_activity, fragment, "ContectisOpened").addToBackStack(null).commit();
+                    break;
+                }
+                case "Report":
+                    Toast.makeText(this, "Report Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case "Policy": {
+                    removeFragments();
+                    Fragment fragment = new PolicyFragment();
+                    setupNotHomeFrag();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.arxiv_activity, fragment, "PolicyisOpened").addToBackStack(null).commit();
+                    break;
+                }
+                case "Copyright": {
+                    removeFragments();
+                    Fragment fragment = new CopyrightFragment();
+                    setupNotHomeFrag();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.arxiv_activity, fragment, "CopyrightisOpened").addToBackStack(null).commit();
+                    break;
+                }
+                case "Donate": {
+                    removeFragments();
+                    Fragment fragment = new DonateFragment();
+                    setupNotHomeFrag();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.arxiv_activity, fragment, "DonateisOpened").addToBackStack(null).commit();
+                    break;
+                }
+                case "Reset password": {
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                        loadingNCancelable.startLoadingdialog();
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        loadingNCancelable.dismissdialog();
+                                        Toast.makeText(arXiv.this, "Reset Password link has been sent to your registered Email", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        loadingNCancelable.dismissdialog();
+                                        Toast.makeText(arXiv.this, "Error :- " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                    break;
+                }
+                case "Log out": {
+                    viewPager2.setCurrentItem(0);
+                    FirebaseAuth.getInstance().signOut();
+                }
+            }
         }
     }
 
@@ -330,6 +340,11 @@ public class arXiv extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "App Started");
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -356,5 +371,51 @@ public class arXiv extends AppCompatActivity {
         Log.i(TAG, "App Destroyed");
 //        System.gc();
     }
+
+    //    public void itemOnClick(View view) {
+//        if (onarXiv){
+//            TextView tv = view.findViewById(R.id.tv_item);
+//            String tit = tv.getText().toString();
+////            Toast.makeText(this, a, Toast.LENGTH_SHORT).show();
+////            Log.i(TAG, "itemOnClick: onarXiv"+onarXiv);
+//            DocListActivity.title = tit;
+//
+//            loadingdialog.startLoadingdialog();
+////            final Handler handler = new Handler(Looper.getMainLooper()) {
+////                @Override
+////                public void handleMessage(Message msg) {
+////                    // This method is executed in main thread
+////                    String content = msg.getData().getString("server_response");
+////
+////                    if (content.equals("getDataDone")){
+////                        loadingdialog.dismissdialog();
+////                        Intent docList = new Intent(getApplicationContext(),DocListActivity.class);
+////                        startActivity(docList);
+////                    }
+////                }
+////            };
+//
+//
+//            // Thread gets data
+////            Thread t = new Thread(new Runnable() {
+////                @Override
+////                public void run() {
+////                    getData();
+//////                    Bundle bundle = new Bundle();
+//////                    bundle.putString("server_response", "getDataDone");
+//////                    Message msg = new Message();
+//////                    msg.setData(bundle);
+//////                    handler.sendMessage(msg);
+////                }
+////            });
+////
+////            if ( t.getState() == Thread.State.NEW ){
+////                t.start();
+////                Log.i(TAG, "itemOnClick: jjj");
+////            }
+//
+//            getData("cat",tit);
+//        }
+//    }
 
 }

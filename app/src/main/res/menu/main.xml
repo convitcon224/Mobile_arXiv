@@ -13,16 +13,4 @@
 <!--        android:title="Search"-->
 <!--        app:showAsAction="ifRoom"-->
 <!--        app:actionViewClass="android.widget.SearchView" />-->
-    <item android:title="About us"
-        android:id="@+id/about"/>
-    <item android:title="Contact"
-        android:id="@+id/contact"/>
-    <item android:title="Report"
-        android:id="@+id/report"/>
-    <item android:title="Policy"
-        android:id="@+id/policy"/>
-    <item android:title="Copyright"
-        android:id="@+id/copyright"/>
-    <item android:title="Donate"
-        android:id="@+id/donate"/>
 </menu>

@@ -46,20 +46,20 @@
                 android:layout_marginTop="20dp"
                 android:drawableStart="@drawable/user_icon"
                 android:drawablePadding="6dp"
-                android:text="Username"
+                android:text="Email"
                 android:textColor="@color/text_color"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/input_username_register"
+                android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ems="10"
                 android:inputType="text"
                 android:padding="12dp"
                 android:layout_marginTop="12dp"
-                android:hint="Enter your Username"
+                android:hint="Enter your email"
                 android:background="@drawable/edittext_bg_login"/>
 
             <TextView
@@ -75,7 +75,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/input_password_register"
+                android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ems="10"
