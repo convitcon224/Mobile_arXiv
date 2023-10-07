@@ -27,20 +27,20 @@ public class DownloadedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_downloaded, container, false);
 
-//        listView = view.findViewById(R.id.list_view);
-//
-//        // Get the download folder path.
-//        File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-//
-//        // Get the Arxiv folder path.
-//        File arxivFolder = new File(downloadFolder, "arXivPDF");
-//
-//        // Get all files from the Arxiv folder.
-//        File[] files = arxivFolder.listFiles();
-//
-//
-//        // Set the list adapter to the list view.
-//        listView.setAdapter(new DownloadedListAdapter(getActivity(), files));
+        listView = view.findViewById(R.id.list_view);
+
+        // Get the download folder path.
+        File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // Get the Arxiv folder path.
+        File arxivFolder = new File(downloadFolder, "arXivPDF");
+
+        // Get all files from the Arxiv folder.
+        File[] files = arxivFolder.listFiles();
+
+
+        // Set the list adapter to the list view.
+        listView.setAdapter(new DownloadedListAdapter(getActivity(), files));
 
 
 
