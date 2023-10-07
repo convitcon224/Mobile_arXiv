@@ -77,28 +77,28 @@
             android:layout_marginTop="20dp"
             >
 
-            <TextView
-                android:id="@+id/tsearchdate"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="11sp"
-                android:paddingBottom="10dp"
-                android:paddingRight="4sp"
-                android:text="From"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/tsearchdate"-->
+<!--                android:layout_width="125dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingTop="11sp"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                android:paddingRight="4sp"-->
+<!--                android:text="From"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="17sp" />-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/datebtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/redbutton"
-                android:onClick="pressedDateButton"
-                android:text="today"
-                android:textColor="@color/white"
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/datebtn"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@drawable/redbutton"-->
+<!--                android:onClick="pressedDateButton"-->
+<!--                android:text="today"-->
+<!--                android:textColor="@color/white"-->
 
-                />
+<!--                />-->
 
         </LinearLayout>
 

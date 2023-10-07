@@ -145,7 +145,8 @@ public class Article_Fragment extends Fragment {
         request.setTitle("PDF Download");
         request.setDescription("Downloading the PDF file");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"arXivPDF/pdf_file.pdf");
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"arXivPDF/"+artTit.substring(0,10)+
+                "_"+auName.substring(0,10).replace("[","").replace("]","")+".pdf");
         DownloadManager manager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
         Toast.makeText(mContext, "Download Started", Toast.LENGTH_SHORT).show();
