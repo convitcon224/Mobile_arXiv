@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -28,22 +29,28 @@ public class DownloadedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_downloaded, container, false);
 
         listView = view.findViewById(R.id.list_view);
+        TextView s_permission = view.findViewById(R.id.s_permission);
 
-        // Get the download folder path.
-        File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        if (arXiv.storagePermis){
+            s_permission.setVisibility(View.INVISIBLE);
+            // Get the download folder path.
+            File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-        // Get the Arxiv folder path.
-        File arxivFolder = new File(downloadFolder, "arXivPDF");
+            // Get the Arxiv folder path.
+            File arxivFolder = new File(downloadFolder, "arXivPDF");
 
-        // Get all files from the Arxiv folder.
-        File[] files = arxivFolder.listFiles();
+            // Get all files from the Arxiv folder.
+            File[] files = arxivFolder.listFiles();
 
 
-        // Set the list adapter to the list view.
-        listView.setAdapter(new DownloadedListAdapter(getActivity(), files));
-
+            // Set the list adapter to the list view.
+            listView.setAdapter(new DownloadedListAdapter(getActivity(), files));
+        } else {
+            s_permission.setVisibility(View.VISIBLE);
+        }
 
 
         return view;
     }
+
 }

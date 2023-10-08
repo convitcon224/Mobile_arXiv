@@ -1,6 +1,7 @@
 package vn.edu.usth.arxiv;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -52,10 +54,14 @@ public class arXiv extends AppCompatActivity {
     public static final String requestTAG = "stringRequestTAG";
     public static final String requestTAGFav = "stringRequestTAGFav";
     public static String url;
+    public static boolean storagePermis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestForPermission();
+
         setContentView(R.layout.arxiv);
         FirebaseAuth.getInstance().signOut();
         FavoriteFragment.favorites = "";
@@ -355,6 +361,34 @@ public class arXiv extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         mRequestQueue.add(stringRequest);
+    }
+
+    private void requestForPermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                },
+                101
+        );
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 101:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    storagePermis = true;
+                } else {
+                    storagePermis = false;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public RequestQueue getRequestQueue() {

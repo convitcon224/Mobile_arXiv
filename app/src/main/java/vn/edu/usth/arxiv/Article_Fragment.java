@@ -58,10 +58,11 @@ public class Article_Fragment extends Fragment {
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             if (FavoriteFragment.favorites.contains("null")){
-                FavoriteFragment.favorites = FavoriteFragment.favorites.replace("null","");
-                FavoriteFragment.titFav = FavoriteFragment.titFav.replaceAll("null", "");
-                FavoriteFragment.datFav = FavoriteFragment.datFav.replaceAll("null", "");
-                FavoriteFragment.auFav = FavoriteFragment.auFav.replaceAll("null", "");
+                FavoriteFragment.favorites = FavoriteFragment.favorites.replaceFirst("null","");
+                FavoriteFragment.titFav = FavoriteFragment.titFav.replaceFirst("null", "");
+                FavoriteFragment.datFav = FavoriteFragment.datFav.replaceFirst("null", "");
+                FavoriteFragment.auFav = FavoriteFragment.auFav.replaceFirst("null", "");
+                uptoDB();
             }
             if (FavoriteFragment.favorites.contains(trackID)){
                 favorite.setImageResource(R.drawable.baseline_favorite_24);
@@ -116,28 +117,27 @@ public class Article_Fragment extends Fragment {
 //    public static String trackID = "";
     private void addToFavorite(){
         FavoriteFragment.favorites += "," + trackID;
-        FavoriteFragment.titFav += "," + artTit;
-        FavoriteFragment.datFav += "," + subDate;
-        FavoriteFragment.auFav += "," + auName;
-        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child(id).child("favorite").setValue(FavoriteFragment.favorites);
-        mDatabase.child(id).child("title").setValue(FavoriteFragment.titFav);
-        mDatabase.child(id).child("date").setValue(FavoriteFragment.datFav);
-        mDatabase.child(id).child("author").setValue(FavoriteFragment.auFav);
+        FavoriteFragment.titFav += "," + artTit + "-" + trackID;
+        FavoriteFragment.datFav += "," + subDate + "-" + trackID;
+        FavoriteFragment.auFav += "," + auName + "-" + trackID;
+        uptoDB();
     }
 
     private void removeFromFavorite(){
-        FavoriteFragment.favorites = FavoriteFragment.favorites.replaceAll("," + trackID, "");
-        FavoriteFragment.titFav = FavoriteFragment.titFav.replaceAll("," + artTit, "");
-        FavoriteFragment.datFav = FavoriteFragment.datFav.replaceAll("," + subDate, "");
-        FavoriteFragment.auFav = FavoriteFragment.auFav.replaceAll("," + auName, "");
+        FavoriteFragment.favorites = FavoriteFragment.favorites.replace("," + trackID, "");
+        FavoriteFragment.titFav = FavoriteFragment.titFav.replace("," + artTit + "-" + trackID, "");
+        FavoriteFragment.datFav = FavoriteFragment.datFav.replace("," + subDate + "-" + trackID, "");
+        FavoriteFragment.auFav = FavoriteFragment.auFav.replace("," + auName + "-" + trackID, "");
+        uptoDB();
+    }
+
+    private void uptoDB(){
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mDatabase.child(id).child("favorite").setValue(FavoriteFragment.favorites);
         mDatabase.child(id).child("title").setValue(FavoriteFragment.titFav);
         mDatabase.child(id).child("date").setValue(FavoriteFragment.datFav);
         mDatabase.child(id).child("author").setValue(FavoriteFragment.auFav);
     }
-
 
 
     private void downloadPDF(){
